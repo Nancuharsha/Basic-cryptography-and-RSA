@@ -1,0 +1,356 @@
+
+\documentclass[12pt,a4paper]{report}
+\usepackage{amsmath}
+\usepackage[pdftex]{graphicx} %for embedding images
+\usepackage{url} %for proper url entries
+\usepackage{titlesec}
+\usepackage[bookmarks, colorlinks=false, pdfborder={0 0 0}, pdftitle={<pdf title here>}, pdfauthor={<author's name here>}, pdfsubject={<subject here>}, pdfkeywords={<keywords here>}]{hyperref} %for creating links in the pdf version and other additional pdf attributes, no effect on the printed document
+%\usepackage[final]{pdfpages} %for embedding another pdf, remove if not required
+
+%For better, wider margins
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=15mm,
+ }
+ 
+ \usepackage{tfrupee}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+ 
+ 
+%To remove 'Chapter #' from pages
+\titleformat{\chapter}{\normalfont\huge}{\thechapter.}{20pt}{\huge\textbf}
+
+
+\begin{document}
+\renewcommand\bibname{References} %Renames "Bibliography" to "References" on ref page
+
+\begin{titlepage}
+
+
+\begin{center}
+\vspace*{1.2cm}
+
+
+
+% Title
+\Huge \textbf{PROJECT CS-254}\\[0.25in]
+\Large{\textup{Spring 2017}} 
+
+        \vspace{.5in}
+
+\LARGE{RSA and BLOWFISH}
+
+        \vspace{.5in}
+
+
+% Submitted by
+\Large{Submitted by} \\
+\textbf{Bandaru Harsha Vardhan,Ganesh Raj}
+\vspace{.6in}\\
+
+Under the guidance of\\
+{\textbf{Dr. Kapil Ahuja}}\\[0.2in]
+
+%\vfill
+\vspace{1in}
+
+\LARGE{Department of Computer Science and Engineering}\\
+\large
+\textsc{Indian Institute of Technology Indore}\\
+Simrol, India \\
+\vspace{0.5in}
+
+\end{center}
+
+\end{titlepage}
+
+
+%\pagenumbering{roman} %numbering before main content starts
+
+\newpage
+
+\begingroup
+\renewcommand{\cleardoublepage}{}
+\renewcommand{\clearpage}{}
+\section*{Index}
+\begin{itemize}
+\item 1. Motivation
+\item 2.Cryptography
+\item 2.1 Simple Definition
+\item 2.2 Past Most Used Methods
+\item 2.3 Cryptography Types
+\item 2.4 Symmetric Cryptography
+\item 2.5 BlowFish
+\item 2.6 Defects of Symmetric Cryptography
+\item 2.7 Asymmetric Cryptography
+\item 2.8 RSA
+\item RSA Algorithm
+\item Brief analyse of algorithm
+\item Finding the power of a large number in log(n) multiplications
+\item Find the number is Prime or not
+\item Quadratic Residue
+\item Euler's Criterion
+\item Another primality checking Algorithm
+\item Factorization of Number N methods:
+\item Pollard's P-1 Algorithm
+\item Defects of RSA
+\item Uses of Cryptography
+
+\end{itemize}
+\newpage
+\chapter{Motivation}
+\begin{itemize}
+\item Data Integrity
+\item Data Confidentiality
+\item Data Authentication
+\item Access Control over Data
+\item Resist Against Eavesdroppers
+\item Many More
+\end{itemize}
+
+\begin{figure}[h]
+
+\centering
+\caption{}
+\end{figure}
+
+\chapter{Cryptography}\label{chap:meth}
+
+\section{Simple Definition}
+Study of secure communications techniques.
+
+\section{Past Most Used Methods}
+\begin{itemize}
+\item Substitution
+\item Transposition
+\item Some algorithms are emerged but Many Failed because security depends on secrecy of algorithms.This technique is called Restricted Algorithms.
+\end{itemize}
+
+So paths emerged for the techniques in which security depends  on secrecy of key not on the secrecy of algorithms.
+
+\section{Cryptography Types}
+Present Days,Cryptographic Key is used to Encrypt and Decrypt.Based on that cryptography is divided into two types,they are
+\begin{itemize}
+\item Asymmetric
+\item Symmetric
+\end{itemize}
+Now a days cryptographic keys are produced by pseudorandom key generators.
+\section{Symmetric Cryptography}
+In Symmetric Cryptography,same cryptographic key is used to Encrypt and Decrypt message.
+Types are:
+\begin{itemize}
+\item Block:
+Encryption takes place on blocks of message and produces same cipher under similar conditions
+\item stream:
+Encryption takes place on every single bit of message and produces different cipher under similar conditions
+\end{itemize}
+Examples: IDEA( International Data Encryption Algorithm) ,DEA(Data Encryption Algorithm) ,AES(Advanced Encryption Standard).
+\section{BLOWFISH}
+Blowfish is a keyed, symmetric block cipher, designed in 1993 by Bruce Schneier and included in a large number of cipher suites and encryption products. Blowfish provides a good encryption rate in software and no effective cryptanalysis of it has been found to date. However, the Advanced Encryption Standard now receives more attention. Schneier designed Blowfish as a general-purpose algorithm, intended as an alternative to the ageing DES and free of the problems and constraints associated with other algorithms. At the time Blowfish was released, many other designs were proprietary, encumbered by patents or were commercial/government secrets..Uses Variable key size and 64 bit symmetric block cipher.Blowfish consist of two parts.
+\begin{itemize}
+\item Key-expansion part(generation of sub-keys from key)
+\item Data- encryption part
+\end{itemize}
+Algorithm:
+\begin{itemize}
+\item p array consist of 18 32-bit subkeys
+\item p1,p2....
+\item There are four s-boxes of 32-bit with 256 entries for sub-keys
+\item Divide "X" message into two 32bits parts xl,xr
+\item for i=1 to 16
+\item xl = xl xor pi
+\item xr = F(xl) xor xr
+\item In F(xl),D function divides xl into a,b,c,d 8-bit quarters parts
+\item F(xl) = ((S1,a + S2,b mod 2\^ 32) XOR S3,c) + S4,d mod 2\^ 32
+\item swap(xl,xr)
+\item end for
+\item swap(xl,xr)
+\item xr = xr xor p17
+\item xl = xl xor p18
+\item recombine xl,xr to form cipher
+\end{itemize}
+\section{Defects of Symmetric Cryptography}
+\begin{itemize}
+\item Trust Issues
+\item Key establishment
+\item Many more
+\end{itemize}
+
+\section{Asymmetric Cryptography}
+Definition: Different cryptographic keys used to Encrypt and Decrypt message.
+Generally use 2 Keys:
+	\begin{itemize}
+	\item Public Key(Released to public)
+    \item Private Key(lies with individual)
+	\end{itemize}
+Generally, Message is encrypted with public key and decrypted with private key
+Remember cipher means Encrypted message.
+And Private is checked by public key as concept is used by Digital Signatures.
+To improve the protection mechanism Public Key Cryptosystem was introduced in 1976 by Whitfield Diffe and Martin Hellman of Stanford University. It uses a pair of related keys one for encryption and other for decryption. One key, which is called the private key, is kept secret and other one known as public key is disclosed.  The message is encrypted with public key and can only be decrypted by using the private key. So, the encrypted message cannot be decrypted by anyone who knows the public key and thus secure communication is possible
+Public Key Cryptography is Asymmetric algorithm..RSA belongs to PKC.
+\section{RSA}
+In 1977,Rivest, Adi Shamir, and Leonard Adleman public proposed this algorithm.RSA uses "TRAP DOOR" concept to produce Keys.
+\section*{Algorithm}
+In simple,
+	It is Easy to get product of two numbers but hard to get those numbers back from resultant value.
+    Example:
+\begin{itemize}
+\item Choose p = 3 and q = 11
+\item compute n = p*q = 3*11 = 33
+\item compute k = (p-1)*(q-1) = 2 * 10 = 20
+\item Choose e such that 1 $<$ e $<$k and e and k are Co-prime .Let e = 7
+\item Compute for d such that (d*e)/k = 1 .Here d = 3
+\item Public Key is (e,n) = (7,33)
+\item Private Key is (d,n) = (3,33)
+\item The encryption of m = 2 is c = 2\^7 \%33 = 29(m - message)
+\item The decryption of c = 29 is m = 29\^3 \% 33 = 2
+\end{itemize}
+\section{Brief analyse of algorithm}
+\begin{itemize}
+\item Finding the power of large number.
+\item Finding Two large prime number.
+\item checking whether chosen number are prime numbers.
+\item Finding the Mod value of large numbers.
+\item Factorization of Two numbers.
+\end{itemize}
+\section*{Finding the power of a large number in log(n) multiplications}
+Code:
+\begin{itemize}
+\item \#include"bits/stdc++.h"
+\item using namespace std;
+\item vector<int> dectobits(int input){
+\item	vector<int> v;
+\item	while(input != 1){
+\item		v.insert(v.begin(),input%2);
+\item		input = input/2
+\item	}
+\item	v.insert(v.begin(),1);
+\item	return v;
+\item }
+\item void powerof(int x,int power){
+\item	vector<int> v(dectobits(power));
+\item	int size = v.size();
+\item	int a = 1;
+\item	for(int i =0;i<size;i++){
+\item		a = a*a;
+\item		if(v[i] == 1){
+\item			a = x*a;
+\item		}
+\item	}
+\item	cout<<"Answer is :"<<a<<endl;
+\item	return ;
+\item }
+\item int main(){
+\item	int x,pow1;
+\item	cin>>x;
+\item	cin>>pow1;
+\item	powerof(x,pow1);
+\item	return 0;
+\item } 
+\item Complexity of the algorithm depends on Length of the power in bits.
+\end{itemize}
+\section*{Find the number is Prime or not}
+As we have find the whether given number is prime or not.\newline
+We AKS algorithm whose complexity is polynomial time.\newline
+Algorithm:
+Let x be variable and p is the prime number.\newline
+(x-1)\^p - (x\^p-1)\newline
+This expression gives all coefficients are multiples of p.\newline
+Another Method to find the given number is prime number.One of the method is probabilistic algorithm .Those are \newline
+Randomized Algorithm Monte-Carlo-Algorithm.Complexity is Log(n) here n is the number of bits to store the number.\newline
+\begin{itemize}
+\item Yes - Monte-Carlo-Algorithm: In this Algorithm tells Yes then the given number is true Prime number But when it says no it has some error probability.
+\item No - Monte-Carlo-Algorithm.:In this Algorithm tells No then the  given number is true non prime number but when it says yes it has some error probability.
+\item When is n is not a prime but algorithm claims it is prime then those are called Pseudo prime number.
+\end{itemize}
+Generally,Number of primes up to N is equal and less than equal to N/Log(N) and probability of number to be prime is 1/Log(N).So try Log(N) give at least one prime number.
+\section*{Quadratic Residue}
+Suppose P is an odd prime and a is an integer.a is defined to be a quadratic residue modulo P is a is not multiple of P and the congruence y\^2	 = a(mod P) has a solution y belongs to Z. a is defined to be a quadratic non residue modulo P is if a is not a multiple of P and a is not a quadratic residue modulo P.\newline
+There are exactly (p-1)/2 QR(Quadratic Residues).\newline
+Example:Z11
+\begin{itemize}
+\item 1\^2 = 1
+\item 2\^2 = 4
+\item 3\^2 = 9
+\item 4\^2 = 5
+\item 5\^2 = 3
+\item 6\^2 = 3
+\item 7\^2 = 5
+\item 8\^2 = 8
+\item 9\^2 = 4
+\item 10\^2 = 1
+\item There are exactly (11 -1)/2 = 5 QR
+\item There exist only two solutions for x\^2 = a(mod P)
+\end{itemize}
+To check whether a number is QR or not in polynomial time.
+\section*{Euler's Criterion}
+Let a P be prime number.Then a is a quadratic residue 	modulo P if and only if\newline
+(a\^(p-1)/2)\%p = 1\newline
+This checking algorithm has complexity of O(Log P)\^3
+\section*{Another primality Checking Algorithm }
+Fermat's Theorem:
+If n is prime,then a\^(n-1)\%p== 1 for any integer a less than p.Whose complexity is less than N or root N.
+\section*{Factorization of Number N Methods:}
+Some of the methods are
+\begin{itemize}
+\item Quadratic Sieve.
+\item Elliptic Curve Factoring Steve .
+\item Number Field Sieve.
+\item Pollard's P-1 Algorithm.
+\item Pollard's rho Algorithm.
+\item Dixon's Random Squares Algorithm.
+\item trial Division Method.
+\end{itemize}
+\section*{Pollard's P-1 Algorithm}
+Algorithm
+\begin{itemize}
+\item Suppose P.Q are prime and N = PQ .The Euler-Fermat theorem guarantees.
+\item a\^(p-1)\%p = 1
+\item For all a relatively prime to P.
+\item Suppose P-1 is a factor of L.Then L = (P-1)*K,so
+\item a\^L \% P= (a\^(P-Q))\^k or 1
+\item Consequently P divides a\^L -1,and since P is a factor p of N.the GCD of a\^L-1 and N will include P.Generally L,we take some factorial of number.And answer of factorial will not include Trivial cases.
+\end{itemize}
+Example:
+\begin{itemize}
+\item Factor 1403(N) using Pollard's P-1 method.
+\item 2\^2 -1, 1403 will be 1.So,it is not the answer.
+\item 2\^3 - 1,1403 will be 1.so,it is not the answer.
+\item 2\^4 -1,1403 will be  1.so,it is not the answer.
+\item 2\^5 -1,1403 will be 61.so,it is the answer.1403 = 61 X 23.
+\item Complexity of Algorithm is Log(B)\^k.K can be any +ve number
+\end{itemize}
+We assumed that by the above knowledge the over complexity is (Log(N))\^K,K is any number.
+\section{Defects of RSA}
+\begin{itemize}
+\item As technology is Developing ,more advance machines are increasing to factorize the number quicker.
+\item Astronomically development in factorization research and methods
+\item Slow encryption and Decryption of messages
+\item For more secure.we need Large Keys.
+\end{itemize}
+But now Latest algorithms uses both symmetric and asymmetric algorithms and hashing for better performance and better security.
+
+\section*{Uses of Cryptography}
+\begin{itemize}
+\item Security
+\item Digital Signature
+\item Access Control
+\item Authentication
+\item Many more
+\end{itemize}
+\section*{Resources}
+\begin{itemize}
+\item Youtube.
+\item Nptel
+\item Wikipedia 
+\item Some website.
+\end{itemize}
+
+\endgroup
+
+\end{document}
